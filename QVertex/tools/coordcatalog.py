@@ -5,8 +5,8 @@ __author__ = 'Filippov Vladislav'
 
 #from pydev import pydevd
 import math
-from common import *
-from qgis.core import QGis
+#from common import *
+#from qgis.core import QGis
 
 
 class Point():

@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
+
 __name__ = 'createCoordCatalog'
 __version__ = '0.1'
 __author__ = 'Filippov Vladislav'
 
-from PyQt4 import QtCore, QtGui
-from coordcatalog import CatalogData
+from PyQt4 import QtCore
+#from coordcatalog import CatalogData
 import os.path
-from PyQt4.QtGui import QDialog, QMessageBox, QFileDialog
-from createCoordCatalog_ui import Ui_CoordCatalog
+from PyQt4.QtGui import QDialog, QFileDialog
+from QVertex.tools.coordcatalog import CatalogData
+from QVertex.tools.createCoordCatalog_ui import Ui_CoordCatalog
 
 
 # Ведомость создаётся на один ЗУ с любым количеством контуров

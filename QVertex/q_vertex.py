@@ -27,9 +27,12 @@ import resources_rc
 # Import the code for the dialog
 from q_vertex_dialog import QVertexDialog
 import os.path, sys
-
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools'))
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+#sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools'))
 from tools.createpoints import CreatePoints
+from tools.createCoordCatalog import CreateCoordCatalog
+from tools.createGeodata import CreateGeodata
 
 
 class QVertex:
@@ -63,7 +66,8 @@ class QVertex:
 
         # Create the dialog (after translation) and keep reference
         self.dlg = QVertexDialog()
-
+        self.dlg_coordcatalog = None
+        self.dlg_geodata = None
         # Declare instance attributes
         self.actions = []
         #self.menu = self.tr(u'&qVertex')
@@ -167,9 +171,17 @@ class QVertex:
 
         self.qvertex_createPoint = QAction(u"Создать точки", self.iface.mainWindow())
         self.qvertex_createPoint.setEnabled(True)
-        #self.qvertex_createPointsetIcon(QIcon(":/plugins/openland/icons/importkk.png"))
+        #self.qvertex_createPoint.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
 
-        self.menu.addActions([self.qvertex_createPoint])
+        self.qvertex_createCtalog = QAction(u"Создать ведомость координат", self.iface.mainWindow())
+        self.qvertex_createCtalog.setEnabled(True)
+        # self.qvertex_createCtalog.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
+
+        self.qvertex_createGeodata = QAction(u"Создать выноску геоданных", self.iface.mainWindow())
+        self.qvertex_createGeodata.setEnabled(True)
+        # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
+
+        self.menu.addActions([self.qvertex_createPoint, self.qvertex_createCtalog, self.qvertex_createGeodata])
         menu_bar = self.iface.mainWindow().menuBar()
         actions = menu_bar.actions()
         lastAction = actions[len(actions) - 1]
@@ -183,6 +195,8 @@ class QVertex:
 
 
         QObject.connect(self.qvertex_createPoint, SIGNAL("triggered()"), self.doCreatepoint)
+        QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
+        QObject.connect(self.qvertex_createGeodata, SIGNAL("triggered()"), self.doCreateGeodata)
 
 
     def unload(self):
@@ -209,3 +223,15 @@ class QVertex:
     def doCreatepoint(self):
         f = CreatePoints(self.iface)
         f.Create()
+
+    def doCreateCoordcatalog(self):
+        if self.dlg_coordcatalog is None:
+            self.dlg_coordcatalog = CreateCoordCatalog(self.iface)
+            self.dlg_coordcatalog.setWindowModality(Qt.NonModal)
+        self.dlg_coordcatalog.show()
+
+    def doCreateGeodata(self):
+        if self.dlg_geodata is None:
+            self.dlg_geodata = CreateGeodata(self.iface)
+            self.dlg_geodata.setWindowModality(Qt.NonModal)
+        self.dlg_geodata.show()
