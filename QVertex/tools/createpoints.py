@@ -108,6 +108,7 @@ class CreatePoints():
         layer.startEditing()
         layer.setCustomProperty("labeling", "pal")
         layer.setCustomProperty("labeling/enabled", "true")
+        layer.setCustomProperty("labeling/fontSize", "9")
         layer.setCustomProperty("labeling/fieldName", "name")
         layer.commitChanges()
 
